@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CarList {
 
-    private List<Car> carList;
+    private List<CarDto> carList;
 
 
 }
