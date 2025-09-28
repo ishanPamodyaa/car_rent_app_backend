@@ -1,5 +1,5 @@
 package edu.icet.enums;
 
-public enum UserRole {
+public enum UserRoles {
     ADMIN , CUSTOMER
 }

@@ -1,6 +1,6 @@
 package edu.icet.entity;
 
-import edu.icet.enums.UserRole;
+import edu.icet.enums.UserRoles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,7 +25,7 @@ public class UserEntity implements UserDetails {
     private String email;
     private String password;
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private UserRoles role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
