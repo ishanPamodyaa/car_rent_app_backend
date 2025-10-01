@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
@@ -26,22 +29,47 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public List<CarDto> getAll() {
-        return List.of();
+        List<CarDto> carList = new ArrayList<>();
+        List<CarEntity> all = carRepository.findAll();
+        all.forEach(CarEntity -> {
+            carList.add(modelMapper.map(CarEntity, CarDto.class));
+        });
+        return carList;
     }
 
     @Override
     public void deleteById(Long id) {
-
+            carRepository.deleteById(id);
     }
 
     @Override
     public CarDto SearchByID(Long id) {
-        return null;
+        return modelMapper.map(carRepository.findById(id), CarDto.class);
     }
 
     @Override
     public boolean UpdateByCar(CarDto carDto, Long id) {
-        return false;
+        if (carDto == null || id == null) {
+            return false;
+        }
+        Optional<CarEntity> optionalExistingCar = carRepository.findById(id);
+        if (optionalExistingCar.isPresent()) {
+            CarEntity existingCar = optionalExistingCar.get();
+            existingCar.setName(carDto.getName());
+            existingCar.setDescription(carDto.getDescription());
+            existingCar.setType(carDto.getType());
+            existingCar.setBrand(carDto.getBrand());
+            existingCar.setImage(carDto.getImage());
+            existingCar.setTransmission(carDto.getTransmission());
+            existingCar.setColor(carDto.getColor());
+            existingCar.setModelDate(carDto.getModelDate());
+            existingCar.setPrice(carDto.getPrice());
+
+            carRepository.save(existingCar);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

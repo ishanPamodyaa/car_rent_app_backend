@@ -18,5 +18,4 @@ public class CarDto {
     private String price;
     private String image;
 
-
 }
