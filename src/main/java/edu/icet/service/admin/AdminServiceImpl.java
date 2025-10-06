@@ -1,8 +1,8 @@
 package edu.icet.service.admin;
 
-import edu.icet.dto.BookACar;
+import edu.icet.dto.BookACarDto;
 import edu.icet.dto.CarDto;
-import edu.icet.dto.SearchCar;
+import edu.icet.dto.SearchCarDto;
 import edu.icet.entity.BookACarEntity;
 import edu.icet.entity.CarEntity;
 import edu.icet.enums.BookCarStatus;
@@ -77,7 +77,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<BookACar> getBooking() {
+    public List<BookACarDto> getBooking() {
         return bookACarRepository.findAll().stream().map(BookACarEntity::getBookingCars).collect(Collectors.toList());
     }
 
@@ -99,7 +99,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<CarDto> searchCar(SearchCar searchCar) {
+    public List<CarDto> searchCar(SearchCarDto searchCar) {
         List<CarEntity> carEntities = carRepository.findAll().stream()
                 .filter(car -> searchCar.getBrand() == null ||
                         car.getBrand().toLowerCase().contains(searchCar.getBrand().toLowerCase()))

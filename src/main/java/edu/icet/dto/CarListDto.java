@@ -2,7 +2,7 @@ package edu.icet.dto;
 
 import java.util.List;
 
-public class CarList {
+public class CarListDto {
 
     private List<CarDto> carList;
 

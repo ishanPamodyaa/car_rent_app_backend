@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class SearchCar {
+public class SearchCarDto {
 
     private  String  brand;
 

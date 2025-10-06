@@ -2,11 +2,10 @@ package edu.icet.controller;
 
 
 import edu.icet.dto.CarDto;
-import edu.icet.dto.SearchCar;
+import edu.icet.dto.SearchCarDto;
 import edu.icet.service.admin.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -63,7 +62,7 @@ public class AdminController {
 
 
     @PostMapping("/search/car")
-    public List<CarDto> searchCars(@RequestBody SearchCar searchCar) {
+    public List<CarDto> searchCars(@RequestBody SearchCarDto searchCar) {
         List<CarDto> cars = adminService.searchCar(searchCar);
         return cars;
     }

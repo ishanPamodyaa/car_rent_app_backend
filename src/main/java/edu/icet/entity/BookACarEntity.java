@@ -1,7 +1,7 @@
 package edu.icet.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import edu.icet.dto.BookACar;
+import edu.icet.dto.BookACarDto;
 import edu.icet.enums.BookCarStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -44,9 +44,9 @@ public class BookACarEntity {
     private CarEntity car;
 
 
-    public BookACar getBookingCars () {
+    public BookACarDto getBookingCars () {
 
-        BookACar bookACar =  new BookACar();
+        BookACarDto bookACar =  new BookACarDto();
 
         bookACar.setBookId(bookId);
         bookACar.setFromDate(fromDate);

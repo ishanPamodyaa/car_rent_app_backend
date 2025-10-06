@@ -1,8 +1,8 @@
 package edu.icet.controller;
 
-import edu.icet.dto.BookACar;
+import edu.icet.dto.BookACarDto;
 import edu.icet.dto.CarDto;
-import edu.icet.dto.SearchCar;
+import edu.icet.dto.SearchCarDto;
 import edu.icet.entity.BookACarEntity;
 import edu.icet.service.customer.CustomerService;
 import jakarta.validation.Valid;
@@ -39,7 +39,7 @@ public class CustomerController {
     }
 
     @PostMapping("/Book-Car/{id}")
-    public ResponseEntity<Map<String, String>> bookCar(@PathVariable Long id, @Valid @RequestBody BookACar bookACar) {
+    public ResponseEntity<Map<String, String>> bookCar(@PathVariable Long id, @Valid @RequestBody BookACarDto bookACar) {
 
         if (id == null || bookACar == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("massage", "Invalid request: Car ID or booking details are missing"));
@@ -60,7 +60,7 @@ public class CustomerController {
     }
 
     @PostMapping("/search/car")
-    public List<CarDto> SearchCar(@RequestBody SearchCar searchCar) {
+    public List<CarDto> SearchCar(@RequestBody SearchCarDto searchCar) {
         List<CarDto> carList = customerService.SearchCar(searchCar);
         return carList;
     }
