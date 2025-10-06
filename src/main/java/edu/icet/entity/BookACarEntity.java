@@ -1,6 +1,7 @@
 package edu.icet.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import edu.icet.dto.BookACar;
 import edu.icet.enums.BookCarStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -41,5 +42,22 @@ public class BookACarEntity {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private CarEntity car;
+
+
+    public BookACar getBookingCars () {
+
+        BookACar bookACar =  new BookACar();
+
+        bookACar.setBookId(bookId);
+        bookACar.setFromDate(fromDate);
+        bookACar.setToDate(toDate);
+        bookACar.setDays(days);
+        bookACar.setAmount(amount);
+        bookACar.setBookCarStatus(bookStatus);
+        bookACar.setEmail(user.getEmail());
+        bookACar.setUserName(user.getName());
+
+        return bookACar;
+    }
 
 }
