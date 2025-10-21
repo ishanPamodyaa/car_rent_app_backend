@@ -59,6 +59,10 @@ public class AdminController {
         return  ResponseEntity.notFound().build();
 
     }
+    @GetMapping("/car/ss")
+    public  String trgrgtgrg(){
+        return "eferfgtrgrg";
+    }
 
 
     @PostMapping("/search/car")
