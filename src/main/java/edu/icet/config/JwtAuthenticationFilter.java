@@ -31,12 +31,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
+        // Skip JWT check for public routes
+        String path = request.getServletPath();
+        if (path.startsWith("/api/auth/")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
+        //  If no Authorization header, skip
         if (StringUtils.isNullOrEmpty(authHeader) || !authHeader.startsWith("Bearer ")) {
             filterChain.doFilter(request, response);
             return;
         }
 
+        //  Extract and validate token
         jwt = authHeader.substring(7);
         userEmail  = jwtUtil.extractUsername(jwt);
 
