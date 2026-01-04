@@ -1,13 +1,12 @@
 package edu.icet.utils;
 
 
-import edu.icet.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -22,10 +21,11 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "5bc84cb497e035fb03c44a22b8ff70f446aba240c5654fa4e028c65b44379ea5f2b465124681fa9b1c5191493dd904e8945e303a5b7081e9cf27bfb2bbd526305c6cf2f1d9a682d42fd018e2366fa1991b0b8f3e3c6d157ed0cecfd119b6d7c3dbe1abb3eee6225f7320c5f2a41e4f923e14ad625d64b7bc72c1562a2d4b19ae413074beff1d1addacdeaa4829fd7057a88befba692f9a84c90124dad6257e639f3e278ac87265c29d05ae6ac0739b1b833e07b3ca33d2c56ef7cc4875b99961bb41ac8846ec7b02c496941f39f53bb59e0e656c8027dd0e9a4ad0aafe7811fb92cc89967cb316d966b7596485b0734ca66a3f692c31502c6fdc5ab128a321e0";
-    private final UserRepository userRepository;
+    @Value("${jwt.secret}")
+    private String secretKey;
 
-
+    @Value("${jwt.expiration}")
+    private long jwtExpiration;
 
     // Extract username from the token
     public String  extractUsername(String token) {
@@ -48,9 +48,8 @@ public class JwtUtil {
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
-                //.setSubject(userRepository.findByName(userDetails.getUsername()).get().getId().toString())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 hours
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -80,21 +79,12 @@ public class JwtUtil {
                 .getBody();
     }
 
-    // Get the signing key
-//    private Key getSignInKey() {
-//        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
-//        return Keys.hmacShaKeyFor(keyBytes);
-//    }
-
     private Key getSignInKey() {
-        return Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
+        return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
     }
+
     public Long extractUserId(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(getSignInKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
+        Claims claims = extractAllClaims(token);
         return claims.get("userId", Long.class);
     }
 }
