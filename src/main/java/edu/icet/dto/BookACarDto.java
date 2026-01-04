@@ -9,7 +9,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class BookACar {
+public class BookACarDto {
     private Long bookId;
     private Date fromDate;
     private Date toDate;

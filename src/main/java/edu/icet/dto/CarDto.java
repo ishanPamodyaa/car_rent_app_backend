@@ -6,7 +6,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Car {
+public class CarDto {
     private Long id;
     private String name;
     private String color;
@@ -17,6 +17,5 @@ public class Car {
     private String description;
     private String price;
     private String image;
-
 
 }

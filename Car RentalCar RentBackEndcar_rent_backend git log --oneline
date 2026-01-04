@@ -1,0 +1,12 @@
+[33m8a0883a[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mjwt-auth-setup[m[33m, [m[1;31morigin/jwt-auth-setup[m[33m)[m fix signup and login requst
+[33m77815ae[m[33m ([m[1;32mfeature/admin-feature[m[33m)[m jwt implement
+[33m55dcd7d[m[33m ([m[1;31morigin/feature/admin-feature[m[33m)[m customer service implementaition
+[33m46b04eb[m customer controller
+[33m1460f2f[m search by car id , delete and update car
+[33m9e96359[m car save and get all car end point create
+[33m094e720[m Admin fea add car
+[33mc3d19de[m[33m ([m[1;31morigin/dev_backend[m[33m, [m[1;32mdev_backend[m[33m)[m Merge pull request #2 from ishanPamodyaa/feature/backend-dto
+[33m9b4beef[m[33m ([m[1;31morigin/feature/backend-dto[m[33m, [m[1;32mfeature/backend-dto[m[33m)[m Add backend DTO feature
+[33m1682132[m[33m ([m[1;31morigin/feature/backend-entities[m[33m, [m[1;32mfeature/backend-entities[m[33m)[m add entity to backend
+[33m8319a55[m project_initialize
+[33me12bca5[m[33m ([m[1;32mbackup-main[m[33m)[m Initial commit
