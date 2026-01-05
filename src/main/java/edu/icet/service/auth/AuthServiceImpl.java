@@ -8,7 +8,7 @@ import edu.icet.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService  {
 
     final UserRepository userRepository;
     final ModelMapper modelMapper;
-    final BCryptPasswordEncoder passwordEncoder;
+    final PasswordEncoder passwordEncoder;
 
     @PostConstruct
     public void createAdminAccount() {
