@@ -59,7 +59,7 @@ public class CustomerServiceImpl implements CustomerService{
             bookACarEntity.setDays(days);
             bookACarEntity.setUser(optionalUserEntity.get());
             bookACarEntity.setCar(optionalCarEntity.get());
-            bookACarEntity.setAmount(Integer.parseInt(optionalCarEntity.get().getPrice()) * days);
+            bookACarEntity.setAmount(Integer.parseInt(optionalCarEntity.get().getRentalPrice()) * days);
             bookACarEntity.setFromDate(bookACarDto.getFromDate());
             bookACarEntity.setToDate(bookACarDto.getToDate());
             bookACarEntity.setBookStatus(BookCarStatus.PENDING);

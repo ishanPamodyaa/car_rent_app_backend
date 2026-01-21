@@ -7,15 +7,19 @@ import lombok.*;
 @NoArgsConstructor
 
 public class CarDto {
+
     private Long id;
     private String name;
-    private String color;
-    private String transmission;
     private String brand;
+    private String modelYear;
+    private String color;
+    private String fuelType;
+    private String transmission;
+    private Double mileage;
     private String type;
-    private String modelDate;
+    private String rentalPrice;
+    private Integer seats;
     private String description;
-    private String price;
     private String image;
 
 }

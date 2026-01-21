@@ -28,7 +28,11 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public void addCar(CarDto carDto) {
-        carRepository.save(modelMapper.map(carDto, CarEntity.class));
+        CarEntity carEntity = modelMapper.map(carDto, CarEntity.class);
+        // Ensure new cars have null ID (not 0) for Hibernate to persist instead of
+        // merge
+        carEntity.setId(null);
+        carRepository.save(carEntity);
     }
 
     @Override
@@ -66,8 +70,11 @@ public class AdminServiceImpl implements AdminService {
             existingCar.setImage(carDto.getImage());
             existingCar.setTransmission(carDto.getTransmission());
             existingCar.setColor(carDto.getColor());
-            existingCar.setModelDate(carDto.getModelDate());
-            existingCar.setPrice(carDto.getPrice());
+            existingCar.setModelYear(carDto.getModelYear());
+            existingCar.setRentalPrice(carDto.getRentalPrice());
+            existingCar.setMileage(carDto.getMileage());
+            existingCar.setSeats(carDto.getSeats());
+            existingCar.setFuelType(carDto.getFuelType());
 
             carRepository.save(existingCar);
             return true;

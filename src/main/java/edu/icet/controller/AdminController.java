@@ -29,19 +29,19 @@ public class AdminController {
         return adminService.getAll();
     }
 
-    @DeleteMapping("/Delete/{id}")
+    @DeleteMapping("/car/{id}")
     public void delete(@PathVariable Long id){
         adminService.deleteById(id);
 
     }
 
-    @GetMapping("/Search-By-Id/{id}")
+    @GetMapping("/car/{id}")
     public CarDto searchByID(@PathVariable Long id){
 
         return   adminService.SearchByID(id);
     }
 
-    @PutMapping("/Update-By-Car/{id}")
+    @PutMapping("/car/{id}")
     public boolean UpdateByCar(@RequestBody CarDto carDto,@PathVariable Long id){
         return adminService.UpdateByCar(carDto,id);
 
@@ -59,6 +59,7 @@ public class AdminController {
         return  ResponseEntity.notFound().build();
 
     }
+
     @GetMapping("/car/ss")
     public  String trgrgtgrg(){
         return "eferfgtrgrg";

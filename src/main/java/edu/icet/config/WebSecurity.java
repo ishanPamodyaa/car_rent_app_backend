@@ -42,6 +42,7 @@ public class WebSecurity {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/admin/**").hasAuthority(UserRoles.ADMIN.name())
                         .requestMatchers("/api/customer/**").hasAuthority(UserRoles.CUSTOMER.name())
+                        .requestMatchers("/api/images/**").hasAnyAuthority(UserRoles.ADMIN.name(), UserRoles.CUSTOMER.name())
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())

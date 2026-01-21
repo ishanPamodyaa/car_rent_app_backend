@@ -65,6 +65,7 @@ public class AuthController {
             );
             System.out.println(authenticationRequest.getEmail());
             System.out.println(authenticationRequest.getPassword());
+            System.out.println("Login.......");
 
         } catch (BadCredentialsException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect username or password.");
@@ -85,12 +86,16 @@ public class AuthController {
                 authenticationResponse.setJwt(jwt);
                 authenticationResponse.setUserid(userRepository.findByEmail(user.getEmail()).get().getId().toString());
                 authenticationResponse.setUserRoles(user.getRole());
+                System.out.println("1"+ authenticationResponse);
             } else {
+                System.out.println("2"+ authenticationResponse);
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User is disabled.");
             }
         } else {
+            System.out.println("3"+ authenticationResponse);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
+        System.out.println("4"+ authenticationResponse);
         return ResponseEntity.ok(authenticationResponse);
     }
 

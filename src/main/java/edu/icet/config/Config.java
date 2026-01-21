@@ -1,6 +1,5 @@
 package edu.icet.config;
 
-
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,9 +8,8 @@ import org.springframework.context.annotation.Configuration;
 public class Config {
 
     @Bean
-    public ModelMapper addModelMapper(){
+    public ModelMapper addModelMapper() {
         return new ModelMapper();
     }
-
 
 }
