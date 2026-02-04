@@ -21,7 +21,7 @@ public class BookACarEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookId;
+    private Long id;
     private Date fromDate;
     private Date toDate;
     private Long days;
@@ -29,33 +29,32 @@ public class BookACarEntity {
     @Enumerated(EnumType.STRING)
     private BookCarStatus bookStatus;
 
-
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "userId")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private UserEntity user;
-    
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JoinColumn(name = "carId" ,nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "carId", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private CarEntity car;
 
+    public BookACarDto getBookingCars() {
 
-    public BookACarDto getBookingCars () {
+        BookACarDto bookACar = new BookACarDto();
 
-        BookACarDto bookACar =  new BookACarDto();
-
-        bookACar.setBookId(bookId);
+        bookACar.setId(id);
         bookACar.setFromDate(fromDate);
         bookACar.setToDate(toDate);
         bookACar.setDays(days);
         bookACar.setAmount(amount);
         bookACar.setBookCarStatus(bookStatus);
+        bookACar.setUserId(user.getId());
         bookACar.setEmail(user.getEmail());
         bookACar.setUserName(user.getName());
+        bookACar.setCarId(car.getId());
 
         return bookACar;
     }

@@ -10,7 +10,8 @@ import java.util.Date;
 @NoArgsConstructor
 
 public class BookACarDto {
-    private Long bookId;
+  
+    private Long id;
     private Date fromDate;
     private Date toDate;
     private Long days;
@@ -19,4 +20,9 @@ public class BookACarDto {
     private Long userId;
     private String email;
     private String userName;
+
+    private Long carId;
+    // private String carName;
+    // private String brand;
+    // private String image;
 }

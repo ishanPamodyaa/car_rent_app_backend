@@ -17,7 +17,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-
 @RestController
 @RequestMapping("api/customer")
 @CrossOrigin
@@ -39,17 +38,33 @@ public class CustomerController {
     }
 
     @PostMapping("/Book-Car/{id}")
-    public ResponseEntity<Map<String, String>> bookCar(@PathVariable Long id, @Valid @RequestBody BookACarDto bookACar) {
+    public ResponseEntity<Map<String, String>> bookCar(@PathVariable Long id,
+            @Valid @RequestBody BookACarDto bookACar) {
 
         if (id == null || bookACar == null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("massage", "Invalid request: Car ID or booking details are missing"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    Collections.singletonMap("message", "Invalid request: Car ID or booking details are missing"));
         }
-        boolean isBooked = customerService.bookCar(id, bookACar);
 
-        if (isBooked) {
-            return ResponseEntity.ok(Collections.singletonMap("message", "Car booked successfully!"));
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("massage", "Car booking failed. Please check the car ID or availability."));
+        try {
+            boolean isBooked = customerService.bookCar(id, bookACar);
+
+            if (isBooked) {
+                return ResponseEntity.ok(Collections.singletonMap("message", "Car booked successfully!"));
+            } else {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Collections.singletonMap("message",
+                        "Car booking failed. Please check the car ID or availability."));
+            }
+        } catch (edu.icet.exception.BookingConflictException ex) {
+            java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd");
+            String errorMessage = String.format(
+                    "This vehicle is already booked from %s to %s. Please select a different date range.",
+                    sdf.format(ex.getConflictFromDate()),
+                    sdf.format(ex.getConflictToDate()));
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Collections.singletonMap("message", errorMessage));
+        } catch (edu.icet.exception.InvalidDateException ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Collections.singletonMap("message", ex.getMessage()));
         }
     }
 
@@ -70,7 +85,6 @@ public class CustomerController {
             @PathVariable Long carId,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date startDate,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date endDate) {
-
 
         if (carId == null || carId <= 0) {
             return ResponseEntity.badRequest().body("Invalid car ID");

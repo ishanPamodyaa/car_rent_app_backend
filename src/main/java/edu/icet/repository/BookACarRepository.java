@@ -9,15 +9,16 @@ import java.sql.Date;
 import java.util.List;
 
 public interface BookACarRepository extends JpaRepository<BookACarEntity, Long> {
-    List<BookACarEntity> findByUserId(Long userid);
+        List<BookACarEntity> findByUserId(Long userid);
 
-    @Query("SELECT b FROM BookACarEntity b WHERE " +
-            "b.car.id = :carId AND " +
-            "b.fromDate <= :endDate AND " +
-            "b.toDate >= :startDate")
-    List<BookACarEntity> findByCarIdAndDateRange(
-            @Param("carId") Long carId,
-            @Param("startDate") Date startDate,
-            @Param("endDate") java.util.Date endDate);
+        @Query("SELECT b FROM BookACarEntity b WHERE " +
+                        "b.car.id = :carId AND " +
+                        "b.bookStatus = edu.icet.enums.BookCarStatus.APPROVED AND " +
+                        "b.fromDate <= :endDate AND " +
+                        "b.toDate >= :startDate")
+        List<BookACarEntity> findByCarIdAndDateRange(
+                        @Param("carId") Long carId,
+                        @Param("startDate") java.util.Date startDate,
+                        @Param("endDate") java.util.Date endDate);
 
 }

@@ -9,12 +9,18 @@ import java.util.List;
 public interface AdminService {
 
     void addCar(CarDto carDto);
+
     List<CarDto> getAll();
 
     void deleteById(Long id);
+
     CarDto SearchByID(Long id);
-    boolean  UpdateByCar(CarDto carDto,Long id);
+
+    boolean UpdateByCar(CarDto carDto, Long id);
+
     List<BookACarDto> getBooking();
-    boolean changeBookingStatus(Long bookingId,String status);
+
+    boolean changeBookingStatus(Long id, String status);
+
     List<CarDto> searchCar(SearchCarDto searchCar);
 }

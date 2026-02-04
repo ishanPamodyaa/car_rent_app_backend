@@ -11,6 +11,7 @@ import edu.icet.repository.CarRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -84,6 +85,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<BookACarDto> getBooking() {
         return bookACarRepository.findAll().stream().map(BookACarEntity::getBookingCars).collect(Collectors.toList());
     }
@@ -95,6 +97,15 @@ public class AdminServiceImpl implements AdminService {
         if (bookACarEntity.isPresent()) {
             BookACarEntity bookACar = bookACarEntity.get();
             if (Objects.equals(status, "APPROVED")) {
+                List<BookACarEntity> list = bookACarRepository.findByCarIdAndDateRange(bookACar.getCar().getId(),
+                        bookACar.getFromDate(), bookACar.getToDate());
+                if (!list.isEmpty()) {
+                    BookACarEntity conflictingBooking = list.get(0);
+                    throw new edu.icet.exception.BookingConflictException(
+                            "Cannot approve: This vehicle is already booked for an overlapping date range",
+                            conflictingBooking.getFromDate(),
+                            conflictingBooking.getToDate());
+                }
                 bookACar.setBookStatus(BookCarStatus.APPROVED);
             } else {
                 bookACar.setBookStatus(BookCarStatus.REJECT);
